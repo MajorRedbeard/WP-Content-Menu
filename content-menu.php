@@ -62,4 +62,22 @@ function category_list($atts) {
 	if ($atts['type'] == 'dropdown') { return $dropdown;}
 	else if ($atts['type'] == 'list') { return $output; } else return;
 }
- 
+
+add_shortcode("subpage-list", "subpage_list");
+
+function subpage_list($atts) {
+	$output = '';
+	$atts = shortcode_atts( array(
+		'depth' => '1',
+		'title' => 'Quick Navigation',
+		'id' => get_the_ID(),
+		'type' => 'list'
+		), $atts );
+		
+	$output .= '<div id="subpage-menu" class="menu"><h3>Related Items</h3>'<?php 
+$children = wp_list_pages( array('child_of' => get_the_ID(), 'depth' => '1', 'title_li' => __(''), 'sort_column' => 'menu_order' ));
+ ?>'</div>';
+ return $output;
+		
+}
+
